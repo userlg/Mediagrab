@@ -20,7 +20,6 @@
 - **Knowledge Graph:** Graphify (knowledge graph con detección de comunidades, clustering y reporte de arquitectura).
 - **Design Intelligence & Skills:** UI/UX Pro Max (`ui-ux-pro-max`), Superdesign (`superdesign`), Canvas Design (`canvas-design`).
 
-
 ---
 
 ## 2. Arquitectura del Código
@@ -89,4 +88,3 @@
   - `improve-animations` & `review-animations`: Diagnóstico y optimización de transiciones y estados interactivos.
   - `apple-design`: Estándares de interacción y fidelidad estética pulida.
   - `ask-sonner`: Patrones reactivos para notificaciones toast.
-
