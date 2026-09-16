@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "AUDIT_LOG.md": {
-    "mtime": 1789595486.9484017,
-    "seen": 1789595505.8112702,
-    "ast_hash": "1e26996634eaeea53f116e580e7b81d3",
+    "mtime": 1789595566.0281222,
+    "seen": 1789595589.340395,
+    "ast_hash": "14aa6c9b2cb9e505537df1edb8b7cc3a",
     "semantic_hash": ""
   },
   "PROJECT_CONTEXT.md": {
@@ -264,15 +264,15 @@
     "semantic_hash": ""
   },
   "app-icon.svg": {
-    "mtime": 1789595457.7653773,
-    "seen": 1789595505.811304,
-    "ast_hash": "99faa1885c66f29ce74e2a9726a9bca8",
+    "mtime": 1789595546.342417,
+    "seen": 1789595589.3404214,
+    "ast_hash": "c357920dd7b6e4bdbdd5065226da6f90",
     "semantic_hash": ""
   },
   "public/icon.svg": {
-    "mtime": 1789595467.743409,
-    "seen": 1789595505.8113084,
-    "ast_hash": "e2e7fa43e1fe818bf267f7944ffa8a69",
+    "mtime": 1789595551.3815637,
+    "seen": 1789595589.3404253,
+    "ast_hash": "438c7843a9860653ca3f33168f10a76c",
     "semantic_hash": ""
   },
   "src-tauri/icons/128x128.png": {

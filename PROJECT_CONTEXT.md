@@ -30,10 +30,13 @@
 - `src/components/`:
   - `BackgroundEffects.tsx`: Capas ambientales de gradientes radiales flotantes, textura de hexágonos y filtro de grano SVG sin impacto en rendimiento.
   - `AppHeader.tsx`: Cabecera unificada con isotipo de la app, tipografía display y selector de idiomas.
-  - `NavigationTabs.tsx`: Navegación accesible por pestañas (`Descargar` / `Plataformas`) con roles ARIA.
+  - `NavigationTabs.tsx`: Navegación accesible por pestañas (`Descargar` / `Plataformas`) con roles ARIA y feedback háptico.
+  - `Button.tsx`: Botón polimórfico reutilizable (`primary`, `secondary`, `danger`, `ghost`) con físicas táctiles `active:scale-[0.98]`.
+  - `VideoCard.tsx`: Previsualización unificada y compacta de miniaturas, títulos y duraciones.
+  - `Select.tsx`: Desplegable accesible con estilo oscuro y flecha chevron SVG.
   - `UrlBar.tsx`: Input con botón de borrado rápido, botón de pegado directo desde el portapapeles y botón de acción con estados deshabilitados reactivos.
   - `OptionsPanel.tsx`: Panel desplegable de formato (MP4, MKV / MP3, M4A) y calidad extraída dinámicamente con selectores oscuros pulidos.
-  - `PlatformsPanel.tsx`: Malla informativa de plataformas soportadas con sus distintivos oficiales, 100% traducida.
+  - `PlatformsPanel.tsx`: Malla informativa de plataformas soportadas con sus distintivos oficiales, 100% traducida y micro-hover sutil.
   - `ProgressBar.tsx`: Barra de progreso animada con brillo dinámico, métricas en tiempo real (porcentaje, velocidad de descarga, ETA) y botón de cancelación.
   - `StatusBanner.tsx`: Alerta de estados de error con botón de descarte accesible.
   - `SuccessModal.tsx`: Diálogo modal de confirmación con thumbnail del contenido, duración formateada y cierre rápido.

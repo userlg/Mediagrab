@@ -1,5 +1,6 @@
 import { useLanguage } from "../hooks/useLanguage";
 import type { ProgressPayload } from "../types";
+import { Button } from "./Button";
 
 interface ProgressBarProps {
   progress: ProgressPayload;
@@ -27,15 +28,9 @@ export function ProgressBar({ progress, onCancel }: ProgressBarProps) {
         <span>ETA {progress.eta}</span>
       </div>
 
-      <button
-        type="button"
-        onClick={onCancel}
-        className="mt-3 flex w-full items-center justify-center rounded-xl py-2
-          text-sm text-danger transition-all duration-200 ease-out hover:bg-danger/10
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger/30"
-      >
+      <Button variant="danger" size="sm" onClick={onCancel} className="mt-3 w-full">
         {t("cancel")}
-      </button>
+      </Button>
     </div>
   );
 }

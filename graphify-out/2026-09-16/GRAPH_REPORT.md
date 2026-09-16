@@ -1,7 +1,7 @@
 # Graph Report - Mediagrab  (2026-09-16)
 
 ## Corpus Check
-- 205 files · ~287,618 words
+- 205 files · ~287,468 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 65 file(s) not represented in the graph (top: .csv 53, (none) 6, .woff2 3)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `12cc66ae`
+- Built from commit: `79c871d2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

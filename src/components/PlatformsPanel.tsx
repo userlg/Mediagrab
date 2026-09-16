@@ -96,18 +96,24 @@ export function PlatformsPanel() {
       {PLATFORMS.map((p) => (
         <div
           key={p.name}
-          className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-3 py-2.5
-            transition-all duration-200 ease-out hover:border-white/20"
+          className="group flex items-center justify-between rounded-xl border border-white/10 bg-black/30 px-3.5 py-2.5
+            transition-all duration-150 ease-out hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.03]
+            hover:shadow-[0_6px_20px_rgba(0,0,0,0.35)] active:scale-[0.99]"
         >
-          <div
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${p.badgeClass}`}
-          >
-            {p.icon}
+          <div className="flex items-center gap-3">
+            <div
+              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg shadow-sm transition-transform duration-150 group-hover:scale-105 ${p.badgeClass}`}
+            >
+              {p.icon}
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-text group-hover:text-white">{p.name}</p>
+              <p className="text-xs text-text-dim">{t(p.detailKey)}</p>
+            </div>
           </div>
-          <div className="min-w-0">
-            <p className="text-sm font-medium text-text">{p.name}</p>
-            <p className="text-xs text-text-dim">{t(p.detailKey)}</p>
-          </div>
+          <span className="rounded-md border border-white/5 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium text-text-dim/80">
+            Full HD · MP4/MP3
+          </span>
         </div>
       ))}
     </div>

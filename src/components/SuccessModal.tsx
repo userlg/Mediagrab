@@ -1,8 +1,9 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useLanguage } from "../hooks/useLanguage";
-import { formatDuration } from "../lib/formatOptions";
 import type { VideoInfo } from "../types";
+import { Button } from "./Button";
 import { Modal } from "./Modal";
+import { VideoCard } from "./VideoCard";
 
 interface SuccessModalProps {
   open: boolean;
@@ -34,33 +35,14 @@ export function SuccessModal({ open, info, onClose }: SuccessModalProps) {
           <p className="mt-1 text-sm text-text-dim">{t("fileSavedSuccess")}</p>
 
           {info && (
-            <div className="mt-5 flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 p-3 text-left">
-              {info.thumbnail && (
-                <img
-                  src={info.thumbnail}
-                  alt=""
-                  className="h-11 w-20 shrink-0 rounded-lg border border-white/10 object-cover"
-                />
-              )}
-              <div className="min-w-0">
-                <p className="truncate text-sm text-text/90">{info.title}</p>
-                <span className="font-mono text-xs text-text-dim">
-                  {formatDuration(info.duration)}
-                </span>
-              </div>
+            <div className="mt-5 text-left">
+              <VideoCard info={info} variant="card" />
             </div>
           )}
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="mt-6 w-full rounded-xl border border-accent bg-accent py-2.5 text-sm font-semibold
-              text-accent-ink transition-all duration-200 ease-out hover:-translate-y-0.5 hover:bg-accent-light
-              hover:shadow-lg hover:shadow-accent/20 active:translate-y-0 active:scale-97
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-          >
+          <Button variant="primary" size="md" onClick={onClose} className="mt-6 w-full">
             {t("ok")}
-          </button>
+          </Button>
         </div>
       </div>
     </Modal>

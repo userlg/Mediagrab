@@ -23,7 +23,7 @@ export function NavigationTabs({ currentView, onSelectView }: NavigationTabsProp
         aria-selected={currentView === "download"}
         aria-controls="panel-download"
         onClick={() => onSelectView("download")}
-        className={`rounded-lg px-3.5 py-1.5 text-sm transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/40 ${
+        className={`rounded-lg px-3.5 py-1.5 text-sm transition-all duration-150 ease-out active:scale-[0.98] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/40 ${
           currentView === "download"
             ? "bg-white/10 text-text shadow-sm"
             : "text-text-dim hover:text-text/80"
@@ -38,7 +38,7 @@ export function NavigationTabs({ currentView, onSelectView }: NavigationTabsProp
         aria-selected={currentView === "platforms"}
         aria-controls="panel-platforms"
         onClick={() => onSelectView("platforms")}
-        className={`rounded-lg px-3.5 py-1.5 text-sm transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/40 ${
+        className={`rounded-lg px-3.5 py-1.5 text-sm transition-all duration-150 ease-out active:scale-[0.98] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent/40 ${
           currentView === "platforms"
             ? "bg-white/10 text-text shadow-sm"
             : "text-text-dim hover:text-text/80"

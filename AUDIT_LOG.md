@@ -145,3 +145,26 @@
   - Ranuras concéntricas de medios / disco de vinilo a 360° centradas en `(128, 128)`.
   - Reflejo de cúpula de vidrio superior (`topHighlight`).
   - Pareja simétrica de destellos artesanales en estrella de 4 puntas (`sparkleGlow`) en ambos hombros (`x=62` y `x=194`) y micro-partículas de balance en la base.
+
+---
+
+## [2026-09-16] - Limpieza Integral de Assets, Extracción de Componentes Reutilizables y Documentación Completa
+
+### 1. Limpieza de Activos
+- Eliminado archivo de icono obsoleto `src/assets/icon.svg` (571 bytes).
+- Regenerados todos los binarios y recursos de iconos nativos multiplataforma (`32x32.png`, `128x128.png`, `icon.ico`, `icon.icns`, logos Appx/Store y resoluciones móviles) ejecutando `yarn tauri icon app-icon.svg`.
+
+### 2. Extracción de Componentes Reutilizables
+- **`src/components/Button.tsx`**: Botón unificado con soporte para variantes (`primary`, `secondary`, `danger`, `ghost`), tamaños (`sm`, `md`, `lg`) y físicas táctiles de Emil Kowalski (`active:scale-[0.98]`, foco accesible con offset y transiciones de 150ms).
+- **`src/components/VideoCard.tsx`**: Desacopla la previsualización de video (miniatura con ratio, título con tooltip/truncamiento y duración mono) compartida entre `OptionsPanel` y `SuccessModal`.
+- **`src/components/Select.tsx`**: Wrapper de selector oscuro consistente con indicador chevron SVG, estados de hover/foco y estilos accesibles.
+
+### 3. Elevación de UI & Micro-interacciones
+- Refactorizados `UrlBar.tsx`, `OptionsPanel.tsx`, `SuccessModal.tsx` y `ProgressBar.tsx` para consumir los componentes reutilizables.
+- En `PlatformsPanel.tsx`, añadidas micro-interacciones hover cinéticas (`hover:-translate-y-0.5`, `active:scale-[0.99]`, elevación de sombra).
+- En `NavigationTabs.tsx`, incorporado feedback de pulsación física (`active:scale-[0.98]`).
+
+### 4. Configuración y Documentación
+- **`.gitignore`**: Ampliado con exclusiones esenciales de Tauri (`src-tauri/target/`, `src-tauri/binaries/`), archivos de sistema (`Thumbs.db`, `.DS_Store`), locks de cargo y temporales.
+- **`README.md`**: Reesctructurado con arquitectura completa en Mermaid, badges oficiales, guía de scripts (`yarn format`, `yarn build`, `yarn tsc`), tabla de componentes, y comandos actualizados.
+

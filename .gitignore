@@ -7,24 +7,45 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Node dependencies and build outputs
+node_modules/
+dist/
+dist-ssr/
 *.local
+
+# Tauri and Rust build artifacts
+src-tauri/target/
+src-tauri/binaries/
+**/target/
+**/*.rs.bk
+Cargo.lock
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
 # Graphify local environment and cache files
 graphify-out/.graphify_*
 graphify-out/cache/
 graphify-out/*/
 
+# Scratch and temp files
+scratch/
+*.tmp

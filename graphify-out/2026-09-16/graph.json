@@ -14235,7 +14235,7 @@
       "node_kind": "heading",
       "norm_label": "2. detalles conservados y perfeccionados",
       "source_file": "AUDIT_LOG.md",
-      "source_location": "L134"
+      "source_location": "L135"
     },
     {
       "id": "audit_log_2_redise\u00f1o_art\u00edstico_del_isotipo_favicon_app_icon_svg_public_icon_svg",
@@ -70364,7 +70364,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AUDIT_LOG.md",
-      "source_location": "L134",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -79405,5 +79405,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "12cc66ae05c17337fd6f728e5cdbf6955ed3b9b4"
+  "built_at_commit": "79c871d211f1075752a8f4c8c4949693f8c9c1a9"
 }
