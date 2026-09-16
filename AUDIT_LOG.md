@@ -80,3 +80,21 @@
 ### 2. Resultados
 - Ejecutado `yarn format` formateando limpiamente todos los archivos de frontend, configuración y markdown.
 - Verificado con `yarn tsc --noEmit` (0 errores).
+
+---
+
+## [2026-09-16] - Rediseño Artístico y Humano del Favicon e Instalación de Skills de Diseño
+
+### 1. Instalación de Skills de Diseño y Creatividad
+- **UI/UX Pro Max** (`nextlevelbuilder/ui-ux-pro-max-skill`): Instalada vía `npx ui-ux-pro-max-cli init --ai antigravity` integrando suites de diseño (`design`, `design-system`, `brand`, `banner-design`, `slides`, `ui-styling`).
+- **Superdesign** (`superdesigndev/superdesign-skill`): Integrada para juicio de diseño anti-slop, consistencia visual y tokens.
+- **Canvas Design** (`anthropics/skills/canvas-design`): Integrada para filosofía artística visual, tensión estética, equilibrio orgánico y artesanía gráfica.
+
+### 2. Rediseño Artístico del Isotipo / Favicon (`app-icon.svg` & `public/icon.svg`)
+- Rompiendo la rigidez simétrica mecánica:
+  - Silueta hexagonal/escudo asimétrica con inclinación kinética dinámica (6°).
+  - Gradiente Aurora multicromático que fluye desde menta neón (`#6ee7b7`) pasando por esmeralda brillante (`#10b981`) hasta azul oceánico profundo (`#0284c7`).
+  - Ola de luz orgánica asimétrica y anillo punteado sutil que evoca el surco de un vinilo o cinta de video.
+  - Glifo central con flecha kinética y bandeja inferior en curva de sonrisa cálida con punto play interno esmeralda.
+  - Acento artesanal ("The Human Touch"): destello en estrella de 4 puntas en la esquina superior derecha que aporta luminosidad y chispa creativa.
+- Verificado con `yarn tsc --noEmit` (0 errores).

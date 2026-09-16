@@ -18,6 +18,8 @@
 - **Plugins Tauri:** `dialog` (selector nativo de carpetas), `clipboard-manager` (pegar links con un click), `opener`, `shell`.
 - **Calidad de Código y Sintaxis:** Prettier 3 (`.prettierrc.json`, scripts `format` y `format:check`).
 - **Knowledge Graph:** Graphify (knowledge graph con detección de comunidades, clustering y reporte de arquitectura).
+- **Design Intelligence & Skills:** UI/UX Pro Max (`ui-ux-pro-max`), Superdesign (`superdesign`), Canvas Design (`canvas-design`).
+
 
 ---
 

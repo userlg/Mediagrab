@@ -1,94 +1,134 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
   <defs>
-    <!-- Background Outer Glow -->
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="userSpaceOnUse">
-      <feGaussianBlur stdDeviation="12" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <!-- Soft Organic Ambient Glow -->
+    <filter id="ambientGlow" x="-30%" y="-30%" width="160%" height="160%" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.06  0 0 0 0 0.73  0 0 0 0 0.51  0 0 0 0.45 0" />
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
     </filter>
 
-    <!-- Glyph Drop Shadow -->
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.25" />
+    <!-- Artistic Drop Shadow for the sculpted glyph -->
+    <filter id="artisticShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="1" dy="3" stdDeviation="4" flood-color="#022116" flood-opacity="0.38" />
     </filter>
 
-    <!-- Main Badge Gradient -->
-    <linearGradient id="emeraldGrad" x1="40" y1="20" x2="216" y2="236" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#38ef7d" />
-      <stop offset="50%" stop-color="#10b981" />
-      <stop offset="100%" stop-color="#059669" />
+    <!-- Star Sparkle Glow -->
+    <filter id="sparkleGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="glow" />
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Multi-Chromatic Aurora Gradient (Emerald with Cyan Depth) -->
+    <linearGradient id="auroraGrad" x1="42" y1="24" x2="220" y2="238" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6ee7b7" />
+      <stop offset="28%" stop-color="#34d399" />
+      <stop offset="65%" stop-color="#10b981" />
+      <stop offset="88%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#0284c7" />
     </linearGradient>
 
-    <!-- Top Rim Light Gradient -->
-    <linearGradient id="rimLight" x1="128" y1="20" x2="128" y2="130" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5" />
+    <!-- Handcrafted Asymmetrical Light Swoop -->
+    <linearGradient id="artisticSwoop" x1="40" y1="40" x2="190" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.4" />
+      <stop offset="45%" stop-color="#a7f3d0" stop-opacity="0.15" />
       <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
     </linearGradient>
 
-    <!-- Inner Shadow / Depth Gradient -->
-    <radialGradient id="innerDepth" cx="50%" cy="35%" r="65%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2" />
-      <stop offset="70%" stop-color="#000000" stop-opacity="0" />
-      <stop offset="100%" stop-color="#044e3b" stop-opacity="0.4" />
-    </radialGradient>
+    <!-- Rim Light with Off-Center Angle -->
+    <linearGradient id="rimLight" x1="80" y1="20" x2="180" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.4" />
+    </linearGradient>
+
+    <!-- Ink Dark Glyph Gradient -->
+    <linearGradient id="inkGrad" x1="128" y1="64" x2="128" y2="192" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#041f16" />
+      <stop offset="100%" stop-color="#031610" />
+    </linearGradient>
   </defs>
 
-  <!-- Ambient Glow Behind Hexagon -->
-  <polygon
-    points="128,30 214,80 214,176 128,226 42,176 42,80"
+  <!-- Ambient Glow Behind the Badge -->
+  <path
+    d="M130 26 C136 23 144 24 150 28 L218 68 C226 73 230 81 229 90 L220 168 C219 177 213 185 205 189 L137 228 C130 232 121 232 114 228 L51 187 C43 182 39 174 40 165 L49 87 C50 78 56 70 64 66 L130 26 Z"
     fill="#10b981"
-    opacity="0.35"
-    filter="url(#glow)"
+    opacity="0.32"
+    filter="url(#ambientGlow)"
   />
 
-  <!-- Main Hexagon with Rounded Geometry -->
-  <polygon
-    points="128,30 214,80 214,176 128,226 42,176 42,80"
-    fill="url(#emeraldGrad)"
+  <!-- Main Asymmetrical Organic Shield / Hexagon -->
+  <path
+    d="M130 26 C136 23 144 24 150 28 L218 68 C226 73 230 81 229 90 L220 168 C219 177 213 185 205 189 L137 228 C130 232 121 232 114 228 L51 187 C43 182 39 174 40 165 L49 87 C50 78 56 70 64 66 L130 26 Z"
+    fill="url(#auroraGrad)"
     stroke="url(#rimLight)"
-    stroke-width="3"
+    stroke-width="2.5"
     stroke-linejoin="round"
   />
 
-  <!-- Internal Shading Layer -->
-  <polygon
-    points="128,30 214,80 214,176 128,226 42,176 42,80"
-    fill="url(#innerDepth)"
-    stroke-linejoin="round"
+  <!-- Artistic Swoop (Organic Light Wave across the badge) -->
+  <path
+    d="M60 74 C90 62 160 70 216 112 C204 154 165 200 120 222 C80 190 52 140 60 74 Z"
+    fill="url(#artisticSwoop)"
   />
 
-  <!-- Inner Soft Bevel Line -->
-  <polygon
-    points="128,38 206,83 206,173 128,218 50,173 50,83"
-    fill="none"
-    stroke="rgba(255, 255, 255, 0.2)"
+  <!-- Subtle Handcrafted Texture Ring (Aesthetic Media Vinyl / Film Groove) -->
+  <path
+    d="M62 152 C56 122 68 88 94 68 C124 45 170 48 198 74"
+    stroke="rgba(255, 255, 255, 0.22)"
     stroke-width="1.5"
-    stroke-linejoin="round"
+    stroke-linecap="round"
+    stroke-dasharray="8 6 18 8"
   />
 
-  <!-- Core MediaGrab Arrow & Tray Icon with Depth -->
-  <g filter="url(#shadow)">
-    <!-- Down Arrow Stem -->
+  <!-- Central Sculpted MediaGrab Arrow & Cradle with Artistic Gesture -->
+  <g filter="url(#artisticShadow)">
+    <!-- Organic Downward Stem with natural curve -->
     <path
-      d="M128,72 L128,148"
-      stroke="#06241a"
+      d="M128 66 C129 95 128 126 128 146"
+      stroke="url(#inkGrad)"
       stroke-width="20"
       stroke-linecap="round"
     />
-    <!-- Down Arrow Head -->
+
+    <!-- Dynamic Flowing Arrowhead with subtle curve -->
     <path
-      d="M92,118 L128,154 L164,118"
+      d="M92 118 C104 132 116 145 128 152 C140 145 152 132 164 118"
       fill="none"
-      stroke="#06241a"
+      stroke="url(#inkGrad)"
       stroke-width="20"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
-    <!-- Base Catch Tray -->
+
+    <!-- Sculpted Cradle Tray (Gentle smiling curve instead of flat horizontal line) -->
     <path
-      d="M84,184 L172,184"
-      stroke="#06241a"
+      d="M80 182 C108 193 148 193 176 182"
+      fill="none"
+      stroke="url(#inkGrad)"
       stroke-width="20"
       stroke-linecap="round"
     />
+
+    <!-- Subtle Inner Play Dot Accent (Humanizing media symbol) -->
+    <circle cx="128" cy="100" r="3.5" fill="#58ffd0" opacity="0.85" />
   </g>
+
+  <!-- The Human Touch: An Artistic 4-Point Craft Starburst (Upper-Right Accent) -->
+  <g filter="url(#sparkleGlow)" transform="translate(196, 60)">
+    <path
+      d="M0 -15 C0 -5 5 0 15 0 C5 0 0 5 0 15 C0 5 -5 0 -15 0 C-5 0 0 -5 0 -15 Z"
+      fill="#ffffff"
+      opacity="0.95"
+    />
+    <circle cx="0" cy="0" r="2.5" fill="#a7f3d0" />
+  </g>
+
+  <!-- Secondary subtle balance gleam (Organic micro-particle) -->
+  <circle cx="68" cy="180" r="2" fill="#ffffff" opacity="0.6" />
 </svg>
