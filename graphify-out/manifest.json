@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "src/components/Footer.tsx": {
-    "mtime": 1789594318.6711657,
-    "seen": 1789594369.491888,
-    "ast_hash": "0fb691dcc4f31559ae067821ac73529a",
+    "mtime": 1789596380.5637627,
+    "seen": 1789596403.5184681,
+    "ast_hash": "6d7e1a7304586af2118d5d67e61ec656",
     "semantic_hash": ""
   },
   "src/components/LanguageSelector.tsx": {
@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "AUDIT_LOG.md": {
-    "mtime": 1789595979.36377,
-    "seen": 1789596011.0112534,
-    "ast_hash": "5d3d381a593e4dc029af6456e4fd373b",
+    "mtime": 1789596379.229311,
+    "seen": 1789596403.5191395,
+    "ast_hash": "254afe8311927185e6ed4a77bf30100c",
     "semantic_hash": ""
   },
   "PROJECT_CONTEXT.md": {

@@ -14439,7 +14439,7 @@
       "node_kind": "heading",
       "norm_label": "2. extraccion de componentes reutilizables",
       "source_file": "AUDIT_LOG.md",
-      "source_location": "L157"
+      "source_location": "L158"
     },
     {
       "id": "audit_log_2_redise\u00f1o_art\u00edstico_del_isotipo_favicon_app_icon_svg_public_icon_svg",
@@ -14487,7 +14487,7 @@
       "node_kind": "heading",
       "norm_label": "3. elevacion de ui & micro-interacciones",
       "source_file": "AUDIT_LOG.md",
-      "source_location": "L162"
+      "source_location": "L164"
     },
     {
       "id": "audit_log_3_resultados_de_verificaci\u00f3n",
@@ -14511,7 +14511,7 @@
       "node_kind": "heading",
       "norm_label": "4. configuracion y documentacion",
       "source_file": "AUDIT_LOG.md",
-      "source_location": "L167"
+      "source_location": "L170"
     },
     {
       "id": "audit_log_a_frontend_y_ui_modular",
@@ -43193,7 +43193,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/Footer.tsx",
-      "source_location": "L17",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -70709,7 +70709,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AUDIT_LOG.md",
-      "source_location": "L157",
+      "source_location": "L158",
       "weight": 1.0
     },
     {
@@ -70720,7 +70720,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AUDIT_LOG.md",
-      "source_location": "L162",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -70731,7 +70731,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AUDIT_LOG.md",
-      "source_location": "L167",
+      "source_location": "L170",
       "weight": 1.0
     },
     {
@@ -79970,5 +79970,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "208506058df5da56519ba3278ca0a4c24c5460bc"
+  "built_at_commit": "058f499e66258925116f572e57628c48edd86d6b"
 }
