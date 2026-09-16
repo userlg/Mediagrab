@@ -1,1 +1,26 @@
-{"0": "Download Flow and Orchestration", "1": "Vite and Frontend Tooling", "2": "Rust Sidecar Downloader", "3": "Header and Platform Catalog", "4": "Tauri Desktop Configuration", "5": "TypeScript Client Configuration", "6": "UI Components and Navigation", "7": "Rust Metadata Extractor and i18n", "8": "Frontend NPM Dependencies", "9": "URL Input and Tooltip Components", "10": "TypeScript Node Configuration", "11": "Tauri Security Capabilities", "12": "Tauri App Lifecycle and Dialogs", "13": "Tauri Build Script", "14": "Rust Entry Point", "15": "Cargo Package Manifest", "16": "Vite Environment Types"}
+{
+  "0": "useLanguage",
+  "1": "package.json",
+  "2": "downloader.rs",
+  "3": "useLanguage.tsx",
+  "4": "tauri.conf.json",
+  "5": "compilerOptions",
+  "6": "App.tsx",
+  "7": "fetch_info",
+  "8": "dependencies",
+  "9": "UrlBar.tsx",
+  "10": "compilerOptions",
+  "11": "default.json",
+  "12": "pick_folder",
+  "13": "build.rs",
+  "14": "main.rs",
+  "15": "mediagrab",
+  "16": "vite-env.d.ts",
+  "17": "Mediagrab",
+  "18": "[2026-09-16] - Refactorización de Arquitectura, Modularización, i18n y Graphify",
+  "19": "devDependencies",
+  "20": ".prettierrc.json",
+  "21": "PROJECT_CONTEXT.md - Mediagrab",
+  "22": "rules/graphify.md",
+  "23": "workflows/graphify.md"
+}
