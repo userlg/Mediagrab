@@ -1,20 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
   <defs>
-    <linearGradient id="hex" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#58ffd0" />
-      <stop offset="100%" stop-color="#1fbd85" />
+    <!-- Background Outer Glow -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Glyph Drop Shadow -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.25" />
+    </filter>
+
+    <!-- Main Badge Gradient -->
+    <linearGradient id="emeraldGrad" x1="40" y1="20" x2="216" y2="236" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38ef7d" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
     </linearGradient>
+
+    <!-- Top Rim Light Gradient -->
+    <linearGradient id="rimLight" x1="128" y1="20" x2="128" y2="130" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Inner Shadow / Depth Gradient -->
+    <radialGradient id="innerDepth" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2" />
+      <stop offset="70%" stop-color="#000000" stop-opacity="0" />
+      <stop offset="100%" stop-color="#044e3b" stop-opacity="0.4" />
+    </radialGradient>
   </defs>
-  <path
-    d="M228,128 L178,214.6 L78,214.6 L28,128 L78,41.4 L178,41.4 Z"
-    fill="url(#hex)"
+
+  <!-- Ambient Glow Behind Hexagon -->
+  <polygon
+    points="128,30 214,80 214,176 128,226 42,176 42,80"
+    fill="#10b981"
+    opacity="0.35"
+    filter="url(#glow)"
   />
-  <path
-    d="M128,66 L128,152 M88,116 L128,160 L168,116 M84,192 L172,192"
-    fill="none"
-    stroke="#0a0a0a"
-    stroke-width="22"
-    stroke-linecap="round"
+
+  <!-- Main Hexagon with Rounded Geometry -->
+  <polygon
+    points="128,30 214,80 214,176 128,226 42,176 42,80"
+    fill="url(#emeraldGrad)"
+    stroke="url(#rimLight)"
+    stroke-width="3"
     stroke-linejoin="round"
   />
+
+  <!-- Internal Shading Layer -->
+  <polygon
+    points="128,30 214,80 214,176 128,226 42,176 42,80"
+    fill="url(#innerDepth)"
+    stroke-linejoin="round"
+  />
+
+  <!-- Inner Soft Bevel Line -->
+  <polygon
+    points="128,38 206,83 206,173 128,218 50,173 50,83"
+    fill="none"
+    stroke="rgba(255, 255, 255, 0.2)"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Core MediaGrab Arrow & Tray Icon with Depth -->
+  <g filter="url(#shadow)">
+    <!-- Down Arrow Stem -->
+    <path
+      d="M128,72 L128,148"
+      stroke="#06241a"
+      stroke-width="20"
+      stroke-linecap="round"
+    />
+    <!-- Down Arrow Head -->
+    <path
+      d="M92,118 L128,154 L164,118"
+      fill="none"
+      stroke="#06241a"
+      stroke-width="20"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- Base Catch Tray -->
+    <path
+      d="M84,184 L172,184"
+      stroke="#06241a"
+      stroke-width="20"
+      stroke-linecap="round"
+    />
+  </g>
 </svg>
