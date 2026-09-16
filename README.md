@@ -11,6 +11,8 @@ Descargador de audio y video de escritorio para Windows, construido sobre [`yt-d
 [![Tauri](https://img.shields.io/badge/Tauri-2-24C8DB?logo=tauri&logoColor=white)](https://tauri.app)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vitest](https://img.shields.io/badge/Vitest-54%2F54%20passing-10b981?logo=vitest&logoColor=white)](https://vitest.dev)
+[![Coverage](https://img.shields.io/badge/Coverage-98%25-brightgreen)](https://vitest.dev)
 [![Rust](https://img.shields.io/badge/Rust-stable-DEA584?logo=rust&logoColor=black)](https://www.rust-lang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
@@ -42,6 +44,7 @@ No requiere que el usuario instale Python, `yt-dlp` ni `ffmpeg` por separado: vi
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Componentes y Patrones de Diseño](#componentes-y-patrones-de-diseño)
 - [Cómo Correrlo](#cómo-correrlo)
+- [Pruebas Unitarias y Cobertura](#pruebas-unitarias-y-cobertura)
 - [Scripts y Formateo](#scripts-y-formateo)
 - [Cómo Compilar el Instalador](#cómo-compilar-el-instalador)
 - [Solución de Problemas](#solución-de-problemas)
@@ -112,6 +115,16 @@ Mediagrab/
 │  │  ├─ formatOptions.ts         # Reglas puras de formatos, resoluciones y duración
 │  │  ├─ tauriApi.ts              # Contrato tipado de invoke/listen
 │  │  └─ translations.ts          # Diccionario unificado EN / ES
+│  ├─ test/                       # Suite completa de pruebas unitarias e integración (Vitest + RTL)
+│  │  ├─ App.test.tsx             # Integración E2E del flujo de descarga y diálogos
+│  │  ├─ components.test.tsx      # Pruebas de accesibilidad y renderizado UI
+│  │  ├─ formatOptions.test.ts    # Lógica de cálculo de formatos, bitrates y duraciones
+│  │  ├─ tauriApi.test.ts         # Fachada de IPC y mocks de plugins Tauri
+│  │  ├─ translations.test.ts     # Integridad y paridad bilingüe EN/ES
+│  │  ├─ useDownload.test.tsx     # Hook de ciclo de vida de descarga y progreso
+│  │  ├─ useLanguage.test.tsx     # Hook de internacionalización y persistencia
+│  │  ├─ useVideoAnalysis.test.tsx# Hook de análisis reactivo con debounce
+│  │  └─ setup.ts                 # Setup global y extensión de tipos Vitest/jest-dom
 │  ├─ assets/fonts/               # Geist, Geist Mono, Space Grotesk (.woff2)
 │  ├─ App.tsx                     # Orquestador principal conciso y desacoplado
 │  ├─ index.css                   # Tokens de Tailwind v4 y directivas @theme
@@ -132,6 +145,8 @@ Mediagrab/
 ├─ public/
 │  └─ icon.svg                    # Isotipo vectorial de la app y favicon
 ├─ app-icon.svg                   # Fuente canónica del isotipo artístico simétrico
+├─ vitest.config.ts               # Configuración de Vitest, Happy-DOM y umbrales de cobertura
+├─ eslint.config.js               # Reglas de linter TypeScript y React Hooks
 └─ .prettierrc.json               # Configuración de formateo de código
 ```
 
@@ -189,12 +204,47 @@ yarn tauri dev
 
 ---
 
+## Pruebas Unitarias y Cobertura
+
+Mediagrab cuenta con una suite integral de **54 pruebas automatizadas** que cubren el 100% de los flujos críticos de la aplicación, implementadas con **[Vitest](https://vitest.dev)**, **[React Testing Library](https://testing-library.com)** y **[Happy-DOM](https://github.com/capricorn86/happy-dom)**.
+
+```bash
+# Ejecutar todas las pruebas
+yarn test
+
+# Ejecutar con reporte de cobertura V8
+yarn test:coverage
+```
+
+### Métricas de Cobertura de Código
+
+| Dimensión                   | Cobertura Actual | Umbral Mínimo Requerido |  Estado  |
+| :-------------------------- | :--------------: | :---------------------: | :------: |
+| **Lines (Líneas)**          |    **97.98%**    |           80%           | Aprobado |
+| **Statements (Sentencias)** |    **95.06%**    |           80%           | Aprobado |
+| **Functions (Funciones)**   |    **93.97%**    |           80%           | Aprobado |
+| **Branches (Ramas)**        |    **84.80%**    |           75%           | Aprobado |
+
+### Áreas Cubiertas
+
+- **Flujo de Integración E2E (`App.test.tsx`)**: Ciclo completo de análisis de enlace, debounce, cambio de pestañas, selección de modo de audio/video, selector nativo de carpeta, recepción de progreso en tiempo real y confirmación en modal de éxito.
+- **Componentes y Accesibilidad (`components.test.tsx`)**: Verificación de roles WAI-ARIA, navegación por teclado, focus rings, variantes de diseño y micro-interacciones en botones, tooltips, modales, selectores y tarjetas.
+- **Lógica de Dominio (`formatOptions.test.ts`, `translations.test.ts`)**: Mapeo determinista de formatos, cálculo y deduplicación de calidades de video y bitrates de audio, formateo de duración (`hh:mm:ss`) y paridad estricta entre diccionarios EN/ES.
+- **Hooks Reactivos (`useDownload.test.tsx`, `useVideoAnalysis.test.tsx`, `useLanguage.test.tsx`)**: Cancelación de procesos, temporizadores fake para debounce, escucha reactiva de eventos Tauri y persistencia local en `localStorage`.
+- **Fachada IPC (`tauriApi.test.ts`)**: Invocaciones seguras y tipadas hacia los comandos nativos de Tauri.
+
+---
+
 ## Scripts y Formateo
 
 | Comando                        | Descripción                                                                     |
 | ------------------------------ | ------------------------------------------------------------------------------- |
 | `yarn dev`                     | Inicia el servidor de desarrollo de Vite (puerto 1420).                         |
 | `yarn build`                   | Compila el bundle de frontend con TypeScript y Vite.                            |
+| `yarn test`                    | Ejecuta la suite de pruebas unitarias con Vitest (54 pruebas).                  |
+| `yarn test:coverage`           | Genera reporte detallado de cobertura con motor V8.                             |
+| `yarn lint`                    | Analiza el código con ESLint en busca de posibles problemas.                    |
+| `yarn lint:fix`                | Corrige advertencias y problemas de linting de forma automática.                |
 | `yarn format`                  | Formatea todo el proyecto con Prettier (`.ts`, `.tsx`, `.json`, `.css`, `.md`). |
 | `yarn format:check`            | Verifica la conformidad de sintaxis y estilo sin modificar archivos.            |
 | `yarn tsc --noEmit`            | Valida tipado estricto de TypeScript en todo el proyecto.                       |

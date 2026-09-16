@@ -227,14 +227,7 @@ describe("Select component", () => {
 
   it("renders options and triggers onChange", () => {
     const handleChange = vi.fn();
-    render(
-      <Select
-        aria-label="Format"
-        options={options}
-        value="mp4"
-        onChange={handleChange}
-      />,
-    );
+    render(<Select aria-label="Format" options={options} value="mp4" onChange={handleChange} />);
 
     const select = screen.getByRole("combobox", { name: /format/i });
     expect(select).toBeInTheDocument();
@@ -254,9 +247,7 @@ describe("Select component", () => {
 describe("StatusBanner component", () => {
   it("renders done status and dismiss button", () => {
     const handleDismiss = vi.fn();
-    renderWithLang(
-      <StatusBanner kind="done" message="All good" onDismiss={handleDismiss} />,
-    );
+    renderWithLang(<StatusBanner kind="done" message="All good" onDismiss={handleDismiss} />);
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
     expect(screen.getByText("All good")).toBeInTheDocument();
@@ -267,9 +258,7 @@ describe("StatusBanner component", () => {
   });
 
   it("renders error status with danger styling", () => {
-    renderWithLang(
-      <StatusBanner kind="error" message="Failed to download" onDismiss={() => {}} />,
-    );
+    renderWithLang(<StatusBanner kind="error" message="Failed to download" onDismiss={() => {}} />);
     expect(screen.getByRole("alert")).toHaveClass("text-danger");
   });
 });
@@ -277,9 +266,7 @@ describe("StatusBanner component", () => {
 describe("NavigationTabs component", () => {
   it("renders tabs and invokes onSelectView on tab click", () => {
     const handleSelect = vi.fn();
-    renderWithLang(
-      <NavigationTabs currentView="download" onSelectView={handleSelect} />,
-    );
+    renderWithLang(<NavigationTabs currentView="download" onSelectView={handleSelect} />);
 
     const downloadTab = screen.getByRole("tab", { name: /descargar|download/i });
     const platformsTab = screen.getByRole("tab", { name: /plataformas|platforms/i });
