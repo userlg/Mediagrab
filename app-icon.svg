@@ -130,8 +130,7 @@
     <circle cx="128" cy="98" r="4" fill="#58ffd0" opacity="0.9" />
   </g>
 
-  <!-- Artistic Symmetrical Craft Starbursts (Paired Sparks of Creativity) -->
-  <!-- Upper-Right Starburst -->
+  <!-- Signature Craft Starburst Accent (Single luminous touch) -->
   <g filter="url(#sparkleGlow)" transform="translate(194, 62)">
     <path
       d="M0 -14 C0 -4.5 4.5 0 14 0 C4.5 0 0 4.5 0 14 C0 4.5 -4.5 0 -14 0 C-4.5 0 0 -4.5 0 -14 Z"
@@ -140,18 +139,4 @@
     />
     <circle cx="0" cy="0" r="2.2" fill="#a7f3d0" />
   </g>
-
-  <!-- Upper-Left Starburst (Mirror Counterpart) -->
-  <g filter="url(#sparkleGlow)" transform="translate(62, 62)">
-    <path
-      d="M0 -14 C0 -4.5 4.5 0 14 0 C4.5 0 0 4.5 0 14 C0 4.5 -4.5 0 -14 0 C-4.5 0 0 -4.5 0 -14 Z"
-      fill="#ffffff"
-      opacity="0.95"
-    />
-    <circle cx="0" cy="0" r="2.2" fill="#a7f3d0" />
-  </g>
-
-  <!-- Lower Subtle Balance Gleams (Symmetrical micro-particles) -->
-  <circle cx="62" cy="194" r="1.8" fill="#ffffff" opacity="0.5" />
-  <circle cx="194" cy="194" r="1.8" fill="#ffffff" opacity="0.5" />
 </svg>

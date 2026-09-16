@@ -129,9 +129,11 @@
 ## [2026-09-16] - Restauración de Simetría con Conservación de Acabados Artísticos (`app-icon.svg` & `public/icon.svg`)
 
 ### 1. Motivación y Criterio
+
 - Se restauró la simetría geométrica y bilateral del isotipo (escudo hexagonal, flecha de descarga, bandeja receptora y destellos), manteniendo intactos todos los detalles artísticos, de iluminación y artesanía digital desarrollados.
 
 ### 2. Detalles Conservados y Perfeccionados
+
 - **Simetría Bilateral Perfecta (Eje X=128)**:
   - Escudo hexagonal balanceado con curvas continuas en vértices.
   - Vástago y flecha central con sutiles curvas orgánicas perfectamente simétricas (`dx=38` en ambas alas).
@@ -143,4 +145,3 @@
   - Ranuras concéntricas de medios / disco de vinilo a 360° centradas en `(128, 128)`.
   - Reflejo de cúpula de vidrio superior (`topHighlight`).
   - Pareja simétrica de destellos artesanales en estrella de 4 puntas (`sparkleGlow`) en ambos hombros (`x=62` y `x=194`) y micro-partículas de balance en la base.
-
