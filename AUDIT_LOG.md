@@ -98,3 +98,23 @@
   - Glifo central con flecha kinética y bandeja inferior en curva de sonrisa cálida con punto play interno esmeralda.
   - Acento artesanal ("The Human Touch"): destello en estrella de 4 puntas en la esquina superior derecha que aporta luminosidad y chispa creativa.
 - Verificado con `yarn tsc --noEmit` (0 errores).
+
+---
+
+## [2026-09-16] - Integración de la Suite de Skills de Animación y Micro-interacciones de Emil Kowalski
+
+### 1. Motivación y Origen
+- Repositorio: `https://github.com/emilkowalski/skills` (Emil Kowalski).
+- Objetivo: Proporcionar estándares de ingeniería de diseño, física de resortes (spring physics), cinemática, micro-interacciones sutiles y animación reactiva que hagan que los componentes se sientan vivos, orgánicos y con acabado artesanal.
+
+### 2. Skills Instaladas en `.agents/skills/`
+- **`animate`**: Construcción de animaciones desde cero con decisiones precisas (cuándo animar, propiedades, curvas bézier/resortes, duración, salida e interrupciones).
+- **`emil-design-eng`**: Filosofía, estándares y criterios estrictos de ingeniería de diseño de Emil Kowalski.
+- **`find-animation-opportunities`**: Detección de momentos clave para micro-interacciones significativas sin sobrecargar la interfaz.
+- **`improve-animations`** y **`review-animations`**: Auditoría, crítica y pulido frame-a-frame de transiciones existentes.
+- **`animation-vocabulary`**: Vocabulario técnico de dinámicas y timing.
+- **`apple-design`**: Principios de diseño e interacción con fidelidad estilo Apple.
+- **`ask-sonner`**: Mejores prácticas para notificaciones toast fluidas con Sonner.
+- **`prototype`**: Prototipado rápido de movimiento.
+- **`pick-ui-library`**, **`animate-expo`**, **`mobile-native`**, **`write-swift`**: Recursos complementarios para frameworks móviles y nativos.
+

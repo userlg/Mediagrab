@@ -71,4 +71,22 @@
 - TypeScript (`tsc --noEmit`): **PASÓ** (0 errores, 0 variables sin uso).
 - Rust (`cargo check`): **PASÓ** (0 warnings, compilación limpia).
 - Vite Build (`yarn build`): **PASÓ** (dist generado correctamente en 2.37s).
-- Graphify: Grafo generado en `graphify-out/` (234 nodos, 395 aristas, 17 comunidades).
+- Graphify: Grafo generado en `graphify-out/`.
+
+---
+
+## 4. Ecosistema de Skills de Diseño y Animación (`.agents/skills/`)
+
+- **Diseño y Sistemas de UI**:
+  - `ui-ux-pro-max`: Catálogo completo de estilos UI, 192 paletas razonadas, tipografías y reglas de stacks (React/Tailwind).
+  - `superdesign`: Juicio estético anti-slop, jerarquía visual de alto impacto y composición de layouts.
+  - `canvas-design`: Filosofía visual artesanal, asimetría orgánica y equilibrio dinámico.
+  - `brand`, `design-system`, `ui-styling`: Identidad corporativa, tokens semánticos y componentes de UI accesibles.
+- **Micro-interacciones y Animación (Emil Kowalski Suite)**:
+  - `animate`: Construcción de animaciones fluidas con física natural, duración y curvas intencionales.
+  - `emil-design-eng`: Principios de ingeniería de diseño con acabado de alta gama.
+  - `find-animation-opportunities`: Identificación de puntos de contacto para deleite visual sutil.
+  - `improve-animations` & `review-animations`: Diagnóstico y optimización de transiciones y estados interactivos.
+  - `apple-design`: Estándares de interacción y fidelidad estética pulida.
+  - `ask-sonner`: Patrones reactivos para notificaciones toast.
+
