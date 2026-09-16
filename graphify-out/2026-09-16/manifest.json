@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "src/components/Footer.tsx": {
-    "mtime": 1789596380.5637627,
-    "seen": 1789596403.5184681,
-    "ast_hash": "6d7e1a7304586af2118d5d67e61ec656",
+    "mtime": 1789596455.232391,
+    "seen": 1789596478.6837897,
+    "ast_hash": "7e9970dc750de09c2a4a4fc6fc695a48",
     "semantic_hash": ""
   },
   "src/components/LanguageSelector.tsx": {

@@ -1,5 +1,30 @@
 # AUDIT_LOG.md - Bitácora Universal de Decisiones y Cambios
 
+## [2026-09-16] - Resolución de Errores de Tipos Vitest/jest-dom y 100% de Pruebas Unitarias Aprobadas
+
+### 1. Diagnóstico y Problemas Identificados
+- **Error de Tipos Vitest en Matchers DOM (`toBeInTheDocument`, `toHaveClass`, `toBeDisabled`)**:
+  - `src/test/setup.ts` importaba `@testing-library/jest-dom`, el cual por defecto extiende los tipos de Jest (`jest.Matchers`) y no la interfaz `Assertion<T>` de Vitest.
+  - Provocaba 28 errores TS2339 en `src/test/components.test.tsx`.
+- **Archivos de Test con JSX y extensión `.ts`**:
+  - `useVideoAnalysis.test.ts` y `useDownload.test.ts` contenían JSX (`<LanguageProvider>`) pero extensión `.ts`, provocando `TS1161: Unterminated regular expression literal`.
+- **Inconsistencias en `App.test.tsx`**:
+  - `screen.getByText("Mediagrab")` fallaba por multiplicidad al existir el texto tanto en el Header (`h1`) como en el Footer (`span`).
+  - `screen.getByText("50%")` fallaba porque `ProgressBar.tsx` formatea el porcentaje con un decimal (`50.0%`).
+
+### 2. Acciones Ejecutadas
+- En `src/test/setup.ts`, se actualizó el import a `@testing-library/jest-dom/vitest`.
+- Se renombraron `src/test/useVideoAnalysis.test.ts` y `src/test/useDownload.test.ts` a `.tsx`.
+- En `src/test/App.test.tsx`:
+  - Se cambió `screen.getByText("Mediagrab")` por consulta accesible `screen.getByRole("heading", { name: "Mediagrab", level: 1 })`.
+  - Se ajustó el matcher de porcentaje a `"50.0%"`.
+
+### 3. Resultados de Verificación
+- `yarn tsc --noEmit`: 0 errores.
+- `yarn test`: 8/8 archivos de test aprobados (54/54 tests pasados).
+
+---
+
 ## [2026-09-16] - Refactorización de Arquitectura, Modularización, i18n y Graphify
 
 ### 1. Diagnóstico Inicial
