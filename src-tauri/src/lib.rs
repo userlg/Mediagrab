@@ -3,11 +3,20 @@ mod info;
 
 use downloader::DownloadState;
 use info::InfoState;
+use tauri::Manager;
 use tauri_plugin_dialog::DialogExt;
 
 #[tauri::command]
 async fn pick_folder(app: tauri::AppHandle) -> Option<String> {
-    tauri::async_runtime::spawn_blocking(move || app.dialog().file().blocking_pick_folder())
+    // La API bloqueante debe invocarse fuera del hilo principal, pero el
+    // diálogo en sí (`pick_folder` con callback) hay que abrirlo desde el
+    // contexto en el que Tauri ejecuta el comando; moverlo entero a
+    // spawn_blocking hace que el diálogo nativo no aparezca en Windows.
+    let (tx, rx) = std::sync::mpsc::channel();
+    app.dialog().file().pick_folder(move |path| {
+        let _ = tx.send(path);
+    });
+    tauri::async_runtime::spawn_blocking(move || rx.recv().ok().flatten())
         .await
         .ok()
         .flatten()
@@ -29,6 +38,14 @@ pub fn run() {
             downloader::cancel_download,
             pick_folder,
         ])
+        .on_window_event(|window, event| {
+            // Si se cierra la ventana con una descarga en curso, el yt-dlp
+            // hijo no se mata solo en Windows — quedaría corriendo (y
+            // escribiendo fragmentos) sin que nadie pueda verlo ni pararlo.
+            if let tauri::WindowEvent::CloseRequested { .. } = event {
+                window.state::<DownloadState>().kill_active();
+            }
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
