@@ -1,28 +1,28 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
-import { downloadDir } from "@tauri-apps/api/path";
 import { useEffect, useState } from "react";
 import { OptionsPanel } from "./components/OptionsPanel";
+import { PlatformsPanel } from "./components/PlatformsPanel";
 import { ProgressBar } from "./components/ProgressBar";
 import { StatusBanner } from "./components/StatusBanner";
+import { SuccessModal } from "./components/SuccessModal";
 import { UrlBar } from "./components/UrlBar";
 import { useDownload } from "./hooks/useDownload";
 import { useVideoAnalysis } from "./hooks/useVideoAnalysis";
 import { FORMAT_BY_MODE, qualityOptions } from "./lib/formatOptions";
+import { pickFolder } from "./lib/tauriApi";
 import type { Mode } from "./types";
 
+type View = "download" | "platforms";
+
 function App() {
+  const [view, setView] = useState<View>("download");
   const [url, setUrl] = useState("");
   const [mode, setMode] = useState<Mode>("video");
   const [format, setFormat] = useState(FORMAT_BY_MODE.video[0].value);
   const [quality, setQuality] = useState("");
-  const [destDir, setDestDir] = useState("");
 
   const { videoInfo, analyzing, error: analysisError } = useVideoAnalysis(url);
   const { status, progress, message, start, cancel, reset } = useDownload();
-
-  useEffect(() => {
-    downloadDir().then(setDestDir).catch(() => {});
-  }, []);
 
   useEffect(() => {
     if (!videoInfo) return;
@@ -36,21 +36,35 @@ function App() {
   }
 
   async function handleDownload() {
-    if (!videoInfo || !quality || !destDir) return;
+    if (!videoInfo || !quality) return;
+    const destDir = await pickFolder();
+    if (!destDir) return; // el usuario cerró el diálogo sin elegir carpeta
     await start({ url, mode, format, quality, destDir });
   }
 
+  function handleSuccessClose() {
+    reset();
+    setUrl("");
+    setMode("video");
+    setFormat(FORMAT_BY_MODE.video[0].value);
+  }
+
   const busy = status === "downloading";
-  const canDownload = Boolean(videoInfo && quality && destDir && !analyzing);
+  const canDownload = Boolean(videoInfo && quality && !analyzing);
 
   return (
     <main
       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-bg"
       style={{
         backgroundImage:
-          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%232ee6a6' fill-opacity='0.09' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          "radial-gradient(circle at center, rgba(16,185,129,0.08) 0%, transparent 70%), " +
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%2310b981' fill-opacity='0.08' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
       }}
     >
+      <div
+        className="animate-drift-c pointer-events-none absolute left-[-6%] top-[-8%] h-[320px] w-[320px]
+          rounded-full bg-[radial-gradient(circle,#ec4899,transparent_70%)] opacity-[0.1] blur-[10px]"
+      />
       <div
         className="animate-drift-a pointer-events-none absolute left-[55%] top-[12%] h-[440px] w-[440px]
           rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-25 blur-[10px]"
@@ -62,16 +76,28 @@ function App() {
 
       <div
         className={`animate-card-enter relative w-[440px] overflow-hidden rounded-2xl
-          border border-white/8 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl
-          backdrop-saturate-150 transition-shadow duration-500
-          ${busy ? "animate-glow-pulse" : ""}`}
-        style={{ backgroundColor: "rgba(20,20,20,0.5)" }}
+          border border-white/10 bg-[rgba(18,24,27,0.65)] p-8 backdrop-blur-xl backdrop-saturate-150
+          transition-shadow duration-200 ease-out
+          hover:shadow-[0_0_25px_rgba(16,185,129,0.15),0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)]
+          ${
+            busy || analyzing
+              ? "shadow-[0_0_30px_rgba(16,185,129,0.12),0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)]"
+              : "shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)]"
+          }`}
       >
+        {/* Toque artístico: un mesh de dos tonos que respira lentamente
+            detrás del contenido, sin competir con la legibilidad. */}
         <div
-          className="pointer-events-none absolute inset-0 z-0"
-          style={{
-            background: "linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0) 40%)",
-          }}
+          className="animate-drift-a pointer-events-none absolute -left-1/4 -top-1/3 z-0 h-[280px] w-[280px]
+            rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-[0.12] blur-[40px]"
+        />
+        <div
+          className="animate-drift-b pointer-events-none absolute -bottom-1/3 -right-1/4 z-0 h-[260px] w-[260px]
+            rounded-full bg-[radial-gradient(circle,#ec4899,transparent_70%)] opacity-[0.08] blur-[40px]"
+        />
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-px
+            bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent)]"
         />
         <svg className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.045] mix-blend-overlay">
           <filter id="grain">
@@ -88,50 +114,76 @@ function App() {
           </h1>
         </div>
 
-        <div className="mt-5">
-          <UrlBar
-            url={url}
-            onUrlChange={setUrl}
-            onDownload={handleDownload}
-            canDownload={canDownload}
-            disabled={busy}
-          />
+        <div className="relative z-10 mx-auto mt-4 flex w-fit gap-1 rounded-xl bg-black/40 p-1">
+          <button
+            type="button"
+            onClick={() => setView("download")}
+            className={`rounded-lg px-3.5 py-1.5 text-sm transition-all duration-200 ease-out ${
+              view === "download" ? "bg-white/10 text-text" : "text-text-dim hover:text-text/80"
+            }`}
+          >
+            Descargar
+          </button>
+          <button
+            type="button"
+            onClick={() => setView("platforms")}
+            className={`rounded-lg px-3.5 py-1.5 text-sm transition-all duration-200 ease-out ${
+              view === "platforms" ? "bg-white/10 text-text" : "text-text-dim hover:text-text/80"
+            }`}
+          >
+            Plataformas
+          </button>
         </div>
 
-        {analyzing && (
-          <div className="animate-fade-in mt-3 flex justify-center text-accent">
-            <ArrowPathIcon className="h-5 w-5 animate-spin" />
+        {view === "platforms" ? (
+          <div className="relative z-10 mt-5">
+            <PlatformsPanel />
+          </div>
+        ) : (
+          <div className="relative z-10">
+            <div className="mt-5">
+              <UrlBar
+                url={url}
+                onUrlChange={setUrl}
+                onDownload={handleDownload}
+                canDownload={canDownload}
+                disabled={busy}
+              />
+            </div>
+
+            {analyzing && (
+              <div className="animate-fade-in mt-3 flex justify-center text-accent">
+                <ArrowPathIcon className="h-5 w-5 animate-spin" />
+              </div>
+            )}
+
+            {analysisError && (
+              <p className="animate-fade-in mt-3 text-center text-sm text-danger">{analysisError}</p>
+            )}
+
+            {videoInfo && !busy && (
+              <OptionsPanel
+                info={videoInfo}
+                mode={mode}
+                onModeChange={handleModeChange}
+                format={format}
+                onFormatChange={setFormat}
+                quality={quality}
+                onQualityChange={setQuality}
+                disabled={busy}
+              />
+            )}
+
+            {busy && <ProgressBar progress={progress} onCancel={cancel} />}
+
+            {status === "error" && message && (
+              <StatusBanner kind="error" message={message} onDismiss={reset} />
+            )}
           </div>
         )}
-
-        {analysisError && (
-          <p className="animate-fade-in mt-3 text-center text-sm text-danger">{analysisError}</p>
-        )}
-
-        {videoInfo && !busy && (
-          <OptionsPanel
-            info={videoInfo}
-            mode={mode}
-            onModeChange={handleModeChange}
-            format={format}
-            onFormatChange={setFormat}
-            quality={quality}
-            onQualityChange={setQuality}
-            onDestDirChange={setDestDir}
-            disabled={busy}
-          />
-        )}
-
-        {busy && <ProgressBar progress={progress} onCancel={cancel} />}
-
-        {(status === "done" || status === "error") && message && (
-          <StatusBanner
-            kind={status === "done" ? "done" : "error"}
-            message={message}
-            onDismiss={reset}
-          />
-        )}
       </div>
+
+      <SuccessModal open={status === "done"} info={videoInfo} onClose={handleSuccessClose} />
     </main>
   );
 }

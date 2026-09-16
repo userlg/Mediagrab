@@ -22,14 +22,17 @@
 }
 
 @theme {
-  --color-bg: #0a0a0a;
+  --color-bg: #0b0f12;
   --color-surface: #141414;
   --color-surface-2: #0f0f0f;
   --color-border: #262626;
   --color-text: #ededed;
   --color-text-dim: #a1a1a1;
-  --color-accent: #2ee6a6;
-  --color-danger: #ff5c5c;
+  --color-accent: #10b981;
+  --color-accent-dark: #059669;
+  --color-accent-light: #34d399;
+  --color-accent-ink: #091e16;
+  --color-danger: #f87171;
 
   --font-sans: "Geist", "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
@@ -39,10 +42,11 @@
   --animate-card-enter: card-enter 0.4s ease-out;
   --animate-panel-enter: panel-enter 0.25s ease-out;
   --animate-check-draw: check-draw 0.4s ease-out forwards;
-  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
   --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-banner-enter: banner-enter 0.2s ease-out;
   --animate-drift-a: drift-a 22s ease-in-out infinite;
   --animate-drift-b: drift-b 26s ease-in-out infinite;
+  --animate-drift-c: drift-c 30s ease-in-out infinite;
 
   @keyframes drift-a {
     0%,
@@ -62,6 +66,15 @@
       transform: translate(8%, -6%) scale(1.12);
     }
   }
+  @keyframes drift-c {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(5%, 5%) scale(1.06);
+    }
+  }
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -70,13 +83,14 @@
       opacity: 1;
     }
   }
-  @keyframes glow-pulse {
-    0%,
-    100% {
-      box-shadow: 0 0 0 1px var(--color-accent), 0 0 20px -4px var(--color-accent);
+  @keyframes banner-enter {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
     }
-    50% {
-      box-shadow: 0 0 0 1px var(--color-accent), 0 0 32px 2px var(--color-accent);
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   @keyframes sheen {

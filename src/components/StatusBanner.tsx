@@ -11,8 +11,8 @@ export function StatusBanner({ kind, message, onDismiss }: StatusBannerProps) {
 
   return (
     <div
-      className={`animate-panel-enter mt-4 flex items-center gap-2.5 rounded-xl border
-        border-white/8 px-3 py-2.5 text-sm ${isDone ? "bg-accent/15 text-accent" : "bg-danger/10 text-danger"}`}
+      className={`animate-banner-enter mt-4 flex items-center gap-2.5 rounded-xl border
+        border-white/10 px-3 py-2.5 text-sm ${isDone ? "bg-accent/15 text-accent" : "bg-danger/10 text-danger"}`}
     >
       {isDone ? (
         <CheckCircleIcon className="h-5 w-5 shrink-0" />
@@ -24,7 +24,7 @@ export function StatusBanner({ kind, message, onDismiss }: StatusBannerProps) {
         type="button"
         onClick={onDismiss}
         aria-label="Cerrar"
-        className="text-current opacity-60 transition-opacity hover:opacity-100"
+        className="text-current opacity-60 transition-opacity duration-200 ease-out hover:opacity-100"
       >
         <XMarkIcon className="h-4 w-4" />
       </button>
