@@ -171,3 +171,13 @@
 
 - **`.gitignore`**: Ampliado con exclusiones esenciales de Tauri (`src-tauri/target/`, `src-tauri/binaries/`), archivos de sistema (`Thumbs.db`, `.DS_Store`), locks de cargo y temporales.
 - **`README.md`**: Reesctructurado con arquitectura completa en Mermaid, badges oficiales, guía de scripts (`yarn format`, `yarn build`, `yarn tsc`), tabla de componentes, y comandos actualizados.
+
+---
+
+## [2026-09-16] - Publicación del Tag de Versión `v0.1.0`
+
+### 1. Tag Anotado Creado y Publicado
+
+- Se etiquetó la versión oficial **`v0.1.0`** en Git (`git tag -a v0.1.0 -m "..."`).
+- Publicado exitosamente al repositorio remoto de GitHub (`git push origin v0.1.0`).
+- Marca el hito de la primera versión estable de MediaGrab con arquitectura modular, diseño flotante, internacionalización completa y motor Tauri v2.
