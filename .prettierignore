@@ -1,0 +1,10 @@
+dist
+node_modules
+src-tauri/target
+src-tauri/gen
+src-tauri/binaries
+graphify-out
+.agents
+*.lock
+yarn.lock
+Cargo.lock
