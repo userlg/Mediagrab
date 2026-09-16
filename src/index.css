@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Geist";
+  src: url("./assets/fonts/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("./assets/fonts/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("./assets/fonts/SpaceGrotesk-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@theme {
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-2: #0f0f0f;
+  --color-border: #262626;
+  --color-text: #ededed;
+  --color-text-dim: #a1a1a1;
+  --color-accent: #2ee6a6;
+  --color-danger: #ff5c5c;
+
+  --font-sans: "Geist", "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-display: "Space Grotesk", "Geist", sans-serif;
+
+  --animate-sheen: sheen 1.4s linear infinite;
+  --animate-card-enter: card-enter 0.4s ease-out;
+  --animate-panel-enter: panel-enter 0.25s ease-out;
+  --animate-check-draw: check-draw 0.4s ease-out forwards;
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-drift-a: drift-a 22s ease-in-out infinite;
+  --animate-drift-b: drift-b 26s ease-in-out infinite;
+
+  @keyframes drift-a {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(-6%, 8%) scale(1.08);
+    }
+  }
+  @keyframes drift-b {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(8%, -6%) scale(1.12);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 1px var(--color-accent), 0 0 20px -4px var(--color-accent);
+    }
+    50% {
+      box-shadow: 0 0 0 1px var(--color-accent), 0 0 32px 2px var(--color-accent);
+    }
+  }
+  @keyframes sheen {
+    from {
+      background-position: 0% 0;
+    }
+    to {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes card-enter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes panel-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes check-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
