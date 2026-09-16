@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Graphify local environment files
+graphify-out/.graphify_*
+
