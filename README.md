@@ -261,9 +261,31 @@ yarn tauri build
 
 El instalador (`.exe` o `.msi`) se generará en `src-tauri/target/release/bundle/`. Los binarios `yt-dlp` y `ffmpeg` se empaquetan de forma automática, por lo que el usuario final no necesita ninguna dependencia externa.
 
+### Build portable (un solo `.exe`)
+
+Por defecto, `mediagrab.exe` necesita tener `yt-dlp.exe` y `ffmpeg.exe` al lado (son *sidecars* — así los coloca el instalador). Si copias solo el `.exe` suelto a otra carpeta sin esos archivos, falla con `os error 2` ("no se encontró el archivo").
+
+Para generar un `.exe` verdaderamente portable — un único archivo que podés copiar a cualquier lado y que se basta solo — usa el feature `portable`, que empaqueta yt-dlp y ffmpeg *dentro* del binario y los extrae junto a él la primera vez que corre:
+
+```bash
+yarn tauri build -f portable
+```
+
+El `mediagrab.exe` resultante (en `src-tauri/target/release/`) pesa bastante más (~180 MB, sobre todo por ffmpeg) porque lleva esos binarios embebidos, y la primera vez que se ejecuta en una carpeta nueva escribe `yt-dlp.exe`/`ffmpeg.exe` ahí mismo antes de arrancar (algo más lento la primera vez; instantáneo después). Para el instalador normal (NSIS/MSI) seguí usando `yarn tauri build` sin el feature — así no se duplica el peso de esos binarios.
+
 ---
 
 ## Solución de Problemas
+
+<details>
+<summary><strong>"El sistema no puede encontrar el archivo especificado. (os error 2)" al descargar</strong></summary>
+
+`mediagrab.exe` no encontró `yt-dlp.exe` (o `ffmpeg.exe`) junto a él. Pasa cuando se copia solo el `.exe` suelto desde `src-tauri/target/release/` a otra carpeta, dejando atrás los sidecars. Dos soluciones:
+
+- Instalá con el instalador generado (`src-tauri/target/release/bundle/nsis/*-setup.exe` o el `.msi`) en vez de copiar el `.exe` a mano.
+- O compilá con `yarn tauri build -f portable` (ver [Build portable](#cómo-compilar-el-instalador)) para obtener un único `.exe` autocontenido.
+
+</details>
 
 <details>
 <summary><strong>Puerto 1420 ocupado al ejecutar <code>yarn tauri dev</code></strong></summary>

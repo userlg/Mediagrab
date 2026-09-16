@@ -15,6 +15,13 @@ edition = "2021"
 name = "mediagrab_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
+[features]
+# Empaqueta yt-dlp y ffmpeg DENTRO del .exe (se autoextraen junto a él la
+# primera vez que corre) en vez de viajar como archivos sidecar aparte.
+# Deshabilitado por defecto: el build normal (el que arma el instalador
+# NSIS/MSI) sigue usando sidecars sueltos, sin este peso extra embebido.
+portable = []
+
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 

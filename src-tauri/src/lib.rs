@@ -1,6 +1,7 @@
 mod downloader;
 mod i18n;
 mod info;
+mod sidecars;
 
 use downloader::DownloadState;
 use info::InfoState;
@@ -26,6 +27,10 @@ async fn pick_folder(app: tauri::AppHandle) -> Option<String> {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // No-op salvo en un build "portable" (--features portable): ahí
+    // escribe yt-dlp/ffmpeg junto al .exe la primera vez que corre.
+    sidecars::ensure_extracted();
+
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_shell::init())
