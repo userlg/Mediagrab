@@ -1,3 +1,4 @@
+use crate::i18n::tr;
 use serde::{Deserialize, Serialize};
 use std::sync::Mutex;
 use tauri::{AppHandle, State};
@@ -49,6 +50,7 @@ pub async fn fetch_info(
     app: AppHandle,
     state: State<'_, InfoState>,
     url: String,
+    lang: String,
 ) -> Result<VideoInfo, String> {
     let (mut rx, child) = app
         .shell()
@@ -80,7 +82,8 @@ pub async fn fetch_info(
     state.0.lock().unwrap().take();
 
     if !exit_ok {
-        return Err(format!("No se pudo analizar el link: {}", stderr.trim()));
+        let prefix = tr(&lang, "Couldn't analyze the link", "No se pudo analizar el link");
+        return Err(format!("{prefix}: {}", stderr.trim()));
     }
 
     let json: serde_json::Value = serde_json::from_str(&stdout).map_err(|e| e.to_string())?;
@@ -88,7 +91,7 @@ pub async fn fetch_info(
     let title = json
         .get("title")
         .and_then(|v| v.as_str())
-        .unwrap_or("Sin título")
+        .unwrap_or(&tr(&lang, "Untitled", "Sin título"))
         .to_string();
     let thumbnail = json
         .get("thumbnail")

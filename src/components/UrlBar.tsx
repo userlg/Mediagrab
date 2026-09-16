@@ -1,5 +1,6 @@
 import { ArrowDownTrayIcon, ClipboardIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { readText } from "@tauri-apps/plugin-clipboard-manager";
+import { useLanguage } from "../hooks/useLanguage";
 import { Tooltip } from "./Tooltip";
 
 interface UrlBarProps {
@@ -11,6 +12,8 @@ interface UrlBarProps {
 }
 
 export function UrlBar({ url, onUrlChange, onDownload, canDownload, disabled }: UrlBarProps) {
+  const { t } = useLanguage();
+
   async function handlePaste() {
     try {
       const text = await readText();
@@ -31,7 +34,7 @@ export function UrlBar({ url, onUrlChange, onDownload, canDownload, disabled }: 
       <div className="relative">
         <input
           type="text"
-          placeholder="Pega el link del video o audio…"
+          placeholder={t("urlPlaceholder")}
           value={url}
           disabled={disabled}
           onChange={(e) => onUrlChange(e.target.value)}
@@ -44,7 +47,7 @@ export function UrlBar({ url, onUrlChange, onDownload, canDownload, disabled }: 
           <button
             type="button"
             onClick={() => onUrlChange("")}
-            aria-label="Borrar link"
+            aria-label={t("clearLink")}
             className="absolute right-2.5 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center
               justify-center rounded-full text-text-dim transition-all duration-200 ease-out
               hover:bg-white/10 hover:text-text"
@@ -55,12 +58,12 @@ export function UrlBar({ url, onUrlChange, onDownload, canDownload, disabled }: 
       </div>
 
       <div className="flex gap-2">
-        <Tooltip text="Pegar">
+        <Tooltip text={t("paste")}>
           <button
             type="button"
             onClick={handlePaste}
             disabled={disabled}
-            aria-label="Pegar"
+            aria-label={t("paste")}
             className="flex items-center justify-center rounded-xl border border-white/10
               bg-transparent px-3.5 text-text transition-all duration-200 ease-out
               hover:-translate-y-0.5 hover:border-white/20 active:translate-y-0 active:scale-95
@@ -71,7 +74,7 @@ export function UrlBar({ url, onUrlChange, onDownload, canDownload, disabled }: 
           </button>
         </Tooltip>
 
-        <Tooltip text="Descargar" className="flex-1">
+        <Tooltip text={t("download")} className="flex-1">
           <button
             type="submit"
             disabled={disabled || !canDownload}
@@ -83,7 +86,7 @@ export function UrlBar({ url, onUrlChange, onDownload, canDownload, disabled }: 
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
           >
             <ArrowDownTrayIcon className="h-4 w-4" />
-            Descargar
+            {t("download")}
           </button>
         </Tooltip>
       </div>

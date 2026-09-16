@@ -7,7 +7,7 @@ interface TooltipProps {
   position?: "top" | "bottom";
 }
 
-const HOVER_DELAY_MS = 3000;
+const HOVER_DELAY_MS = 300;
 
 export function Tooltip({ text, children, className = "", position = "top" }: TooltipProps) {
   const [visible, setVisible] = useState(false);
@@ -45,6 +45,7 @@ export function Tooltip({ text, children, className = "", position = "top" }: To
       {children}
       <div
         role="tooltip"
+        aria-hidden={!visible}
         className={`pointer-events-none absolute left-1/2 z-50 -translate-x-1/2 whitespace-nowrap
           rounded-md border border-white/10 bg-[#1a1a1a] px-2.5 py-1.5 text-xs text-text
           shadow-[0_8px_24px_rgba(0,0,0,0.45)] transition-all duration-200 ease-out

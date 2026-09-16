@@ -1,15 +1,10 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen, type UnlistenFn } from "@tauri-apps/api/event";
-import type {
-  CompletePayload,
-  ErrorPayload,
-  Mode,
-  ProgressPayload,
-  VideoInfo,
-} from "../types";
+import type { Lang } from "./translations";
+import type { CompletePayload, ErrorPayload, Mode, ProgressPayload, VideoInfo } from "../types";
 
-export function fetchInfo(url: string): Promise<VideoInfo> {
-  return invoke<VideoInfo>("fetch_info", { url });
+export function fetchInfo(url: string, lang: Lang): Promise<VideoInfo> {
+  return invoke<VideoInfo>("fetch_info", { url, lang });
 }
 
 export function startDownload(params: {
@@ -18,6 +13,7 @@ export function startDownload(params: {
   format: string;
   quality: string;
   destDir: string;
+  lang: Lang;
 }): Promise<void> {
   return invoke("start_download", params);
 }
@@ -30,20 +26,14 @@ export function pickFolder(): Promise<string | null> {
   return invoke<string | null>("pick_folder");
 }
 
-export function onDownloadProgress(
-  cb: (payload: ProgressPayload) => void,
-): Promise<UnlistenFn> {
+export function onDownloadProgress(cb: (payload: ProgressPayload) => void): Promise<UnlistenFn> {
   return listen<ProgressPayload>("download-progress", (e) => cb(e.payload));
 }
 
-export function onDownloadComplete(
-  cb: (payload: CompletePayload) => void,
-): Promise<UnlistenFn> {
+export function onDownloadComplete(cb: (payload: CompletePayload) => void): Promise<UnlistenFn> {
   return listen<CompletePayload>("download-complete", (e) => cb(e.payload));
 }
 
-export function onDownloadError(
-  cb: (payload: ErrorPayload) => void,
-): Promise<UnlistenFn> {
+export function onDownloadError(cb: (payload: ErrorPayload) => void): Promise<UnlistenFn> {
   return listen<ErrorPayload>("download-error", (e) => cb(e.payload));
 }

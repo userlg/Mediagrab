@@ -22,11 +22,11 @@ Descargador de audio y video de escritorio para Windows, construido sobre [`yt-d
 
 Mediagrab es una interfaz gráfica minimalista sobre `yt-dlp`: pegas un link, la app analiza el video en segundo plano, eliges si quieres el video o solo el audio, en qué formato y calidad, y dónde guardarlo. Una barra de progreso muestra el porcentaje y la velocidad en tiempo real mientras descarga, con opción de cancelar en cualquier momento.
 
-No requiere que el usuario final instale Python, `yt-dlp` ni `ffmpeg` por separado — ambos viajan empacados dentro del instalador como binarios *sidecar* de Tauri.
+No requiere que el usuario final instale Python, `yt-dlp` ni `ffmpeg` por separado — ambos viajan empacados dentro del instalador como binarios _sidecar_ de Tauri.
 
 ## Características
 
-- 🔗 **Pegar y analizar automático** — sin botón de "analizar", solo pegas el link y la app detecta título, miniatura, duración y las calidades reales disponibles para *ese* video.
+- 🔗 **Pegar y analizar automático** — sin botón de "analizar", solo pegas el link y la app detecta título, miniatura, duración y las calidades reales disponibles para _ese_ video.
 - 🎞️ **Video o audio** — MP4/MKV para video, MP3/M4A para audio, con selector de calidad dinámico según lo que el video realmente ofrezca.
 - 📂 **Carpeta de destino** elegible con el diálogo nativo del sistema.
 - 📊 **Progreso en vivo** — porcentaje, velocidad y ETA, con cancelación real del proceso (no solo de la UI).
@@ -46,7 +46,7 @@ No requiere que el usuario final instale Python, `yt-dlp` ni `ffmpeg` por separa
 
 ## Arquitectura
 
-Mediagrab es una app Tauri: el **frontend** (React) solo dibuja UI y despacha *comandos*; todo el trabajo pesado — invocar `yt-dlp`, parsear su salida, mover archivos — vive en el **backend** (Rust), que a su vez delega la descarga real a los binarios *sidecar*.
+Mediagrab es una app Tauri: el **frontend** (React) solo dibuja UI y despacha _comandos_; todo el trabajo pesado — invocar `yt-dlp`, parsear su salida, mover archivos — vive en el **backend** (Rust), que a su vez delega la descarga real a los binarios _sidecar_.
 
 ```mermaid
 flowchart LR
@@ -124,26 +124,26 @@ sequenceDiagram
 
 ## Patrones de diseño del código
 
-| Patrón | Dónde | Por qué |
-|---|---|---|
+| Patrón                                               | Dónde                                                                      | Por qué                                                                                                                                                                               |
+| ---------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Hooks para lógica, componentes para presentación** | `hooks/useVideoAnalysis.ts`, `hooks/useDownload.ts` vs. `components/*.tsx` | Los componentes (`UrlBar`, `OptionsPanel`, `ProgressBar`, `StatusBanner`) solo reciben props y renderizan — toda la lógica async, debounce y suscripción a eventos vive en los hooks. |
-| **Fachada única sobre el IPC** | `lib/tauriApi.ts` | Ningún componente llama `invoke`/`listen` directamente; si cambia un nombre de comando o la forma de un payload, se toca un solo archivo. |
-| **Funciones puras para reglas de negocio** | `lib/formatOptions.ts` | Derivar formatos/calidades por modo y formatear duración son funciones puras, testeables sin React ni Tauri. |
-| **Un solo dueño del proceso hijo** | `downloader.rs` (`DownloadState`), `info.rs` (`InfoState`) | Cada proceso `yt-dlp` activo se guarda en un `Mutex` gestionado; arrancar uno nuevo mata el anterior en vez de dejarlo huérfano. |
-| **Eventos, no polling** | `downloader.rs` → `app.emit(...)`, `useDownload.ts` → `listen(...)` | El progreso se empuja desde Rust hacia React vía eventos de Tauri en lugar de que la UI pregunte por estado. |
-| **Componentes reutilizables genéricos** | `components/Tooltip.tsx` | Un solo componente (`text`, `children`, `position`) reutilizado en cualquier botón, en vez de tooltips ad-hoc repetidos. |
-| **Diseño en tokens, no valores sueltos** | `src/index.css` (`@theme` de Tailwind v4) | Colores, tipografías y animaciones están declarados una vez como variables de diseño y consumidos por clase utilitaria. |
+| **Fachada única sobre el IPC**                       | `lib/tauriApi.ts`                                                          | Ningún componente llama `invoke`/`listen` directamente; si cambia un nombre de comando o la forma de un payload, se toca un solo archivo.                                             |
+| **Funciones puras para reglas de negocio**           | `lib/formatOptions.ts`                                                     | Derivar formatos/calidades por modo y formatear duración son funciones puras, testeables sin React ni Tauri.                                                                          |
+| **Un solo dueño del proceso hijo**                   | `downloader.rs` (`DownloadState`), `info.rs` (`InfoState`)                 | Cada proceso `yt-dlp` activo se guarda en un `Mutex` gestionado; arrancar uno nuevo mata el anterior en vez de dejarlo huérfano.                                                      |
+| **Eventos, no polling**                              | `downloader.rs` → `app.emit(...)`, `useDownload.ts` → `listen(...)`        | El progreso se empuja desde Rust hacia React vía eventos de Tauri en lugar de que la UI pregunte por estado.                                                                          |
+| **Componentes reutilizables genéricos**              | `components/Tooltip.tsx`                                                   | Un solo componente (`text`, `children`, `position`) reutilizado en cualquier botón, en vez de tooltips ad-hoc repetidos.                                                              |
+| **Diseño en tokens, no valores sueltos**             | `src/index.css` (`@theme` de Tailwind v4)                                  | Colores, tipografías y animaciones están declarados una vez como variables de diseño y consumidos por clase utilitaria.                                                               |
 
 ## Stack técnico
 
-| Capa | Tecnología |
-|---|---|
-| Shell de escritorio | [Tauri 2](https://tauri.app) (Rust + WebView2 en Windows) |
-| UI | React 19 + TypeScript, Vite |
-| Estilos | Tailwind CSS v4 (`@tailwindcss/vite`), tipografías self-hosted (Geist, Geist Mono, Space Grotesk) |
-| Iconografía | [Heroicons](https://heroicons.com) |
-| Motor de descarga | [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) + `ffmpeg`, como binarios *sidecar* |
-| Plugins de Tauri | `shell` (spawnear sidecars), `dialog` (elegir carpeta), `clipboard-manager` (botón Pegar) |
+| Capa                | Tecnología                                                                                        |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| Shell de escritorio | [Tauri 2](https://tauri.app) (Rust + WebView2 en Windows)                                         |
+| UI                  | React 19 + TypeScript, Vite                                                                       |
+| Estilos             | Tailwind CSS v4 (`@tailwindcss/vite`), tipografías self-hosted (Geist, Geist Mono, Space Grotesk) |
+| Iconografía         | [Heroicons](https://heroicons.com)                                                                |
+| Motor de descarga   | [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) + `ffmpeg`, como binarios _sidecar_                  |
+| Plugins de Tauri    | `shell` (spawnear sidecars), `dialog` (elegir carpeta), `clipboard-manager` (botón Pegar)         |
 
 ## Estructura del proyecto
 
@@ -213,7 +213,7 @@ mv ffmpeg.exe ffmpeg-x86_64-pc-windows-msvc.exe
 rm ffmpeg.zip
 ```
 
-> El sufijo `-x86_64-pc-windows-msvc` es obligatorio: es la convención de nombres que usa Tauri para resolver binarios *sidecar* según la plataforma.
+> El sufijo `-x86_64-pc-windows-msvc` es obligatorio: es la convención de nombres que usa Tauri para resolver binarios _sidecar_ según la plataforma.
 
 ### 3. Levantar la app en desarrollo
 
@@ -245,6 +245,7 @@ Quedó un proceso de Vite de una corrida anterior sin cerrar. Ciérralo y vuelve
 taskkill /F /IM node.exe
 taskkill /F /IM mediagrab.exe
 ```
+
 </details>
 
 <details>
@@ -257,6 +258,7 @@ cd src-tauri
 cargo clean -p mediagrab
 cargo build
 ```
+
 </details>
 
 <details>

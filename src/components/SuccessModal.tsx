@@ -1,4 +1,5 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { useLanguage } from "../hooks/useLanguage";
 import { formatDuration } from "../lib/formatOptions";
 import type { VideoInfo } from "../types";
 import { Modal } from "./Modal";
@@ -10,6 +11,8 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ open, info, onClose }: SuccessModalProps) {
+  const { t } = useLanguage();
+
   return (
     <Modal open={open} onClose={onClose}>
       <div
@@ -19,15 +22,16 @@ export function SuccessModal({ open, info, onClose }: SuccessModalProps) {
         <div
           className="pointer-events-none absolute -top-1/3 left-1/2 h-[220px] w-[220px] -translate-x-1/2
             rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-[0.15] blur-[40px]"
+          aria-hidden="true"
         />
 
         <div className="relative z-10">
           <CheckCircleIcon className="mx-auto h-14 w-14 text-accent" />
 
           <h2 className="mt-3 text-xl font-bold tracking-tight text-text [font-family:var(--font-display)]">
-            ¡Descarga completa!
+            {t("downloadComplete")}
           </h2>
-          <p className="mt-1 text-sm text-text-dim">Tu archivo se guardó con éxito.</p>
+          <p className="mt-1 text-sm text-text-dim">{t("fileSavedSuccess")}</p>
 
           {info && (
             <div className="mt-5 flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 p-3 text-left">
@@ -40,7 +44,9 @@ export function SuccessModal({ open, info, onClose }: SuccessModalProps) {
               )}
               <div className="min-w-0">
                 <p className="truncate text-sm text-text/90">{info.title}</p>
-                <span className="font-mono text-xs text-text-dim">{formatDuration(info.duration)}</span>
+                <span className="font-mono text-xs text-text-dim">
+                  {formatDuration(info.duration)}
+                </span>
               </div>
             </div>
           )}
@@ -53,7 +59,7 @@ export function SuccessModal({ open, info, onClose }: SuccessModalProps) {
               hover:shadow-lg hover:shadow-accent/20 active:translate-y-0 active:scale-97
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
           >
-            OK
+            {t("ok")}
           </button>
         </div>
       </div>

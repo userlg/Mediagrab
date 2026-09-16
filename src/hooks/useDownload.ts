@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "./useLanguage";
 import {
   cancelDownload,
   onDownloadComplete,
@@ -17,6 +18,14 @@ export function useDownload() {
   });
   const [message, setMessage] = useState<string | null>(null);
 
+  const { lang, t } = useLanguage();
+  // Los listeners de eventos se registran una sola vez (efecto con deps
+  // vacías); se lee `t` por ref para que el mensaje de "Guardado en ..."
+  // siempre use el idioma vigente en el momento del evento, no el que
+  // estaba activo cuando se montó el hook.
+  const tRef = useRef(t);
+  tRef.current = t;
+
   useEffect(() => {
     let disposed = false;
     let unlisteners: (() => void)[] = [];
@@ -26,7 +35,7 @@ export function useDownload() {
       onDownloadComplete((p) => {
         if (disposed) return;
         setStatus("done");
-        setMessage(`Guardado en ${p.path}`);
+        setMessage(`${tRef.current("savedTo")} ${p.path}`);
       }),
       onDownloadError((p) => {
         if (disposed) return;
@@ -61,10 +70,10 @@ export function useDownload() {
     setMessage(null);
     setProgress({ percent: 0, speed: "—", eta: "—" });
     try {
-      await startDownload(params);
+      await startDownload({ ...params, lang });
     } catch (err) {
       setStatus("error");
-      setMessage(typeof err === "string" ? err : "No se pudo iniciar la descarga.");
+      setMessage(typeof err === "string" ? err : t("couldNotStartDownload"));
     }
   }
 

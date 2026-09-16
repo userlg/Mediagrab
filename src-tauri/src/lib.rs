@@ -1,4 +1,5 @@
 mod downloader;
+mod i18n;
 mod info;
 
 use downloader::DownloadState;

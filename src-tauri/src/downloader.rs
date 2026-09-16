@@ -1,3 +1,4 @@
+use crate::i18n::tr;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
@@ -62,6 +63,16 @@ fn cleanup_partial_files(dest_dir: &str) {
     }
 }
 
+fn progress_regex() -> &'static Regex {
+    static RE: std::sync::OnceLock<Regex> = std::sync::OnceLock::new();
+    RE.get_or_init(|| {
+        Regex::new(
+            r"(?i)\[download\]\s+(\d+(?:\.\d+)?)%(?:\s+of\s+(?:~\s*)?\S+)?(?:\s+at\s+([\d.]+\w+/s|Unknown speed))?(?:\s+ETA\s+(\S+))?(?:\s+\(frag\s+(\d+)/(\d+)\))?",
+        )
+        .expect("invalid progress regex")
+    })
+}
+
 fn build_args(url: &str, mode: &str, format: &str, quality: &str, dest_dir: &str, ffmpeg_dir: Option<&Path>) -> Vec<String> {
     let output_template = Path::new(dest_dir)
         .join("%(title)s.%(ext)s")
@@ -119,6 +130,7 @@ pub async fn start_download(
     format: String,
     quality: String,
     dest_dir: String,
+    lang: String,
 ) -> Result<(), String> {
     // Los binarios sidecar (yt-dlp, ffmpeg) quedan siempre junto al ejecutable
     // de la app, tanto en dev como en el bundle final.
@@ -150,10 +162,7 @@ pub async fn start_download(
     // ("of ~   6.42MiB"). Sin el `(?:~\s*)?` ahí, `\S+` solo capturaba el
     // "~" suelto y rompía la coincidencia de "at <velocidad>" y "ETA" que
     // le siguen.
-    let progress_re = Regex::new(
-        r"(?i)\[download\]\s+(\d+(?:\.\d+)?)%(?:\s+of\s+(?:~\s*)?\S+)?(?:\s+at\s+([\d.]+\w+/s|Unknown speed))?(?:\s+ETA\s+(\S+))?(?:\s+\(frag\s+(\d+)/(\d+)\))?",
-    )
-    .unwrap();
+    let progress_re = progress_regex();
     let dest_path = dest_dir;
     // Video = 2 streams por descargar (video + audio, luego se fusionan);
     // audio = 1 solo stream. Se usa para que el % general avance parejo en
@@ -229,7 +238,11 @@ pub async fn start_download(
                     } else {
                         cleanup_partial_files(&dest_path);
                         let message = if stderr_tail.is_empty() {
-                            "yt-dlp terminó con un error. Revisa el link e inténtalo de nuevo.".to_string()
+                            tr(
+                                &lang,
+                                "yt-dlp exited with an error. Check the link and try again.",
+                                "yt-dlp terminó con un error. Revisa el link e inténtalo de nuevo.",
+                            )
                         } else {
                             stderr_tail.clone()
                         };

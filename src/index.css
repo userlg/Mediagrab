@@ -38,6 +38,10 @@
   --font-mono: "Geist Mono", ui-monospace, monospace;
   --font-display: "Space Grotesk", "Geist", sans-serif;
 
+  /* Curva de ease-out más marcada que la de CSS por defecto — se siente
+     más intencional en hovers y transiciones cortas de UI. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
   --animate-sheen: sheen 1.4s linear infinite;
   --animate-card-enter: card-enter 0.4s ease-out;
   --animate-panel-enter: panel-enter 0.25s ease-out;

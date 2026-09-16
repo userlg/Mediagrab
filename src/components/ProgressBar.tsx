@@ -1,3 +1,4 @@
+import { useLanguage } from "../hooks/useLanguage";
 import type { ProgressPayload } from "../types";
 
 interface ProgressBarProps {
@@ -6,6 +7,7 @@ interface ProgressBarProps {
 }
 
 export function ProgressBar({ progress, onCancel }: ProgressBarProps) {
+  const { t } = useLanguage();
   const percent = Math.min(100, Math.max(0, progress.percent));
 
   return (
@@ -32,7 +34,7 @@ export function ProgressBar({ progress, onCancel }: ProgressBarProps) {
           text-sm text-danger transition-all duration-200 ease-out hover:bg-danger/10
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger/30"
       >
-        Cancelar
+        {t("cancel")}
       </button>
     </div>
   );

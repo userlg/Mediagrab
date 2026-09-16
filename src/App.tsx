@@ -1,5 +1,9 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import { AppHeader } from "./components/AppHeader";
+import { BackgroundEffects, CardGlowEffects } from "./components/BackgroundEffects";
+import { Footer } from "./components/Footer";
+import { NavigationTabs, type ViewTab } from "./components/NavigationTabs";
 import { OptionsPanel } from "./components/OptionsPanel";
 import { PlatformsPanel } from "./components/PlatformsPanel";
 import { ProgressBar } from "./components/ProgressBar";
@@ -12,10 +16,8 @@ import { FORMAT_BY_MODE, qualityOptions } from "./lib/formatOptions";
 import { pickFolder } from "./lib/tauriApi";
 import type { Mode } from "./types";
 
-type View = "download" | "platforms";
-
-function App() {
-  const [view, setView] = useState<View>("download");
+export default function App() {
+  const [view, setView] = useState<ViewTab>("download");
   const [url, setUrl] = useState("");
   const [mode, setMode] = useState<Mode>("video");
   const [format, setFormat] = useState(FORMAT_BY_MODE.video[0].value);
@@ -38,7 +40,7 @@ function App() {
   async function handleDownload() {
     if (!videoInfo || !quality) return;
     const destDir = await pickFolder();
-    if (!destDir) return; // el usuario cerró el diálogo sin elegir carpeta
+    if (!destDir) return;
     await start({ url, mode, format, quality, destDir });
   }
 
@@ -54,138 +56,93 @@ function App() {
 
   return (
     <main
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-bg"
+      className="relative flex min-h-screen flex-col overflow-hidden bg-bg"
       style={{
         backgroundImage:
           "radial-gradient(circle at center, rgba(16,185,129,0.08) 0%, transparent 70%), " +
           "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%2310b981' fill-opacity='0.08' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
       }}
     >
-      <div
-        className="animate-drift-c pointer-events-none absolute left-[-6%] top-[-8%] h-[320px] w-[320px]
-          rounded-full bg-[radial-gradient(circle,#ec4899,transparent_70%)] opacity-[0.1] blur-[10px]"
-      />
-      <div
-        className="animate-drift-a pointer-events-none absolute left-[55%] top-[12%] h-[440px] w-[440px]
-          rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-25 blur-[10px]"
-      />
-      <div
-        className="animate-drift-b pointer-events-none absolute left-[15%] top-[55%] h-[360px] w-[360px]
-          rounded-full bg-[radial-gradient(circle,#3fa8ff,transparent_70%)] opacity-10 blur-[10px]"
-      />
+      <BackgroundEffects />
 
-      <div
-        className={`animate-card-enter relative w-[440px] overflow-hidden rounded-2xl
-          border border-white/10 bg-[rgba(18,24,27,0.65)] p-8 backdrop-blur-xl backdrop-saturate-150
-          transition-shadow duration-200 ease-out
-          hover:shadow-[0_0_25px_rgba(16,185,129,0.15),0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)]
-          ${
-            busy || analyzing
-              ? "shadow-[0_0_30px_rgba(16,185,129,0.12),0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)]"
-              : "shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)]"
-          }`}
-      >
-        {/* Toque artístico: un mesh de dos tonos que respira lentamente
-            detrás del contenido, sin competir con la legibilidad. */}
-        <div
-          className="animate-drift-a pointer-events-none absolute -left-1/4 -top-1/3 z-0 h-[280px] w-[280px]
-            rounded-full bg-[radial-gradient(circle,var(--color-accent),transparent_70%)] opacity-[0.12] blur-[40px]"
-        />
-        <div
-          className="animate-drift-b pointer-events-none absolute -bottom-1/3 -right-1/4 z-0 h-[260px] w-[260px]
-            rounded-full bg-[radial-gradient(circle,#ec4899,transparent_70%)] opacity-[0.08] blur-[40px]"
-        />
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-px
-            bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent)]"
-        />
-        <svg className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.045] mix-blend-overlay">
-          <filter id="grain">
-            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
-            <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#grain)" />
-        </svg>
-
-        <div className="relative z-10 flex items-center justify-center gap-2.5">
-          <img src="/icon.svg" alt="" className="h-7 w-7" />
-          <h1 className="text-[26px] font-bold tracking-tight text-text [font-family:var(--font-display)]">
-            Mediagrab
-          </h1>
-        </div>
-
-        <div className="relative z-10 mx-auto mt-4 flex w-fit gap-1 rounded-xl bg-black/40 p-1">
-          <button
-            type="button"
-            onClick={() => setView("download")}
-            className={`rounded-lg px-3.5 py-1.5 text-sm transition-all duration-200 ease-out ${
-              view === "download" ? "bg-white/10 text-text" : "text-text-dim hover:text-text/80"
+      <div className="relative z-10 flex flex-1 items-center justify-center px-6 py-8">
+        <section
+          aria-label="Media Grabber Card"
+          className={`animate-card-enter relative w-[440px] overflow-hidden rounded-2xl
+            border border-white/10 bg-[rgba(18,24,27,0.65)] p-8 backdrop-blur-xl backdrop-saturate-150
+            transition-shadow duration-200 ease-out
+            hover:shadow-[0_0_25px_rgba(16,185,129,0.15),0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)]
+            ${
+              busy || analyzing
+                ? "shadow-[0_0_30px_rgba(16,185,129,0.12),0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)]"
+                : "shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.12)]"
             }`}
-          >
-            Descargar
-          </button>
-          <button
-            type="button"
-            onClick={() => setView("platforms")}
-            className={`rounded-lg px-3.5 py-1.5 text-sm transition-all duration-200 ease-out ${
-              view === "platforms" ? "bg-white/10 text-text" : "text-text-dim hover:text-text/80"
-            }`}
-          >
-            Plataformas
-          </button>
-        </div>
+        >
+          <CardGlowEffects />
 
-        {view === "platforms" ? (
-          <div className="relative z-10 mt-5">
-            <PlatformsPanel />
-          </div>
-        ) : (
-          <div className="relative z-10">
-            <div className="mt-5">
-              <UrlBar
-                url={url}
-                onUrlChange={setUrl}
-                onDownload={handleDownload}
-                canDownload={canDownload}
-                disabled={busy}
-              />
+          <AppHeader />
+
+          <NavigationTabs currentView={view} onSelectView={setView} />
+
+          {view === "platforms" ? (
+            <div className="relative z-10 mt-5">
+              <PlatformsPanel />
             </div>
-
-            {analyzing && (
-              <div className="animate-fade-in mt-3 flex justify-center text-accent">
-                <ArrowPathIcon className="h-5 w-5 animate-spin" />
+          ) : (
+            <div
+              id="panel-download"
+              role="tabpanel"
+              aria-labelledby="tab-download"
+              className="relative z-10"
+            >
+              <div className="mt-5">
+                <UrlBar
+                  url={url}
+                  onUrlChange={setUrl}
+                  onDownload={handleDownload}
+                  canDownload={canDownload}
+                  disabled={busy}
+                />
               </div>
-            )}
 
-            {analysisError && (
-              <p className="animate-fade-in mt-3 text-center text-sm text-danger">{analysisError}</p>
-            )}
+              {analyzing && (
+                <div className="animate-fade-in mt-3 flex justify-center text-accent" role="status">
+                  <ArrowPathIcon className="h-5 w-5 animate-spin" />
+                </div>
+              )}
 
-            {videoInfo && !busy && (
-              <OptionsPanel
-                info={videoInfo}
-                mode={mode}
-                onModeChange={handleModeChange}
-                format={format}
-                onFormatChange={setFormat}
-                quality={quality}
-                onQualityChange={setQuality}
-                disabled={busy}
-              />
-            )}
+              {analysisError && (
+                <p className="animate-fade-in mt-3 text-center text-sm text-danger" role="alert">
+                  {analysisError}
+                </p>
+              )}
 
-            {busy && <ProgressBar progress={progress} onCancel={cancel} />}
+              {videoInfo && !busy && (
+                <OptionsPanel
+                  info={videoInfo}
+                  mode={mode}
+                  onModeChange={handleModeChange}
+                  format={format}
+                  onFormatChange={setFormat}
+                  quality={quality}
+                  onQualityChange={setQuality}
+                  disabled={busy}
+                />
+              )}
 
-            {status === "error" && message && (
-              <StatusBanner kind="error" message={message} onDismiss={reset} />
-            )}
-          </div>
-        )}
+              {busy && <ProgressBar progress={progress} onCancel={cancel} />}
+
+              {status === "error" && message && (
+                <StatusBanner kind="error" message={message} onDismiss={reset} />
+              )}
+            </div>
+          )}
+        </section>
       </div>
+
+      <Footer />
 
       <SuccessModal open={status === "done"} info={videoInfo} onClose={handleSuccessClose} />
     </main>
   );
 }
-
-export default App;
