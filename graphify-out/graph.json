@@ -43193,7 +43193,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/Footer.tsx",
-      "source_location": "L24",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -79970,5 +79970,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "058f499e66258925116f572e57628c48edd86d6b"
+  "built_at_commit": "dc56a729d7db47ce64f4a54649ff0a473ecbdc10"
 }
